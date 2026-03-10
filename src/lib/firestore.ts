@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { collection, doc, setDoc, updateDoc, deleteDoc, getDoc, getDocs, query, where, orderBy, serverTimestamp, limit } from 'firebase/firestore';
+import { collection, doc, setDoc, updateDoc, deleteDoc, getDoc, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { Listing, Order, SearchFilters } from '@/types';
 
 export const createListing = async (data: Omit<Listing, 'id' | 'createdAt' | 'updatedAt'>) => {

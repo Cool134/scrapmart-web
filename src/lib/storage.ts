@@ -31,7 +31,7 @@ export const uploadScrapImage = async (
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           resolve(downloadURL);
-        } catch (error) {
+        } catch {
           reject(new Error("Failed to retrieve image URL after upload."));
         }
       }
@@ -44,7 +44,7 @@ export const deleteScrapImage = async (url: string): Promise<void> => {
   try {
     const fileRef = ref(storage, url);
     await deleteObject(fileRef);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Failed to delete image from storage:", error);
     throw new Error("Could not delete image from server.");
   }

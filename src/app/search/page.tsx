@@ -1,5 +1,5 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 import { SearchFilters as SearchFiltersComponent } from "@/components/shared/SearchFilters";
 import { ListingCard, ListingCardSkeleton } from "@/components/shared/ListingCard";
@@ -11,6 +11,7 @@ import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 function SearchContent() {
   const params = useSearchParams();
+  const router = useRouter();
   const initialQuery = params.get("q") || "";
   
   const [filters, setFilters] = useState<SearchFilters>({
@@ -101,7 +102,7 @@ function SearchContent() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">No offsets found</h3>
             <p className="text-gray-500 font-medium max-w-sm">
-              We couldn't find any materials matching your exact criteria. Try broadening your filters.
+              We couldn&apos;t find any materials matching your exact criteria. Try broadening your filters.
             </p>
             <button 
               onClick={() => { setFilters({}); setQuery(""); router.push('/search'); }} 

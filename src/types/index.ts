@@ -6,7 +6,7 @@ export interface User {
   email: string;
   role: Role;
   photoURL?: string | null;
-  createdAt: any; // Firestore Timestamp
+  createdAt: string; // Firestore Timestamp
 }
 
 export interface AIAnalysisResult {

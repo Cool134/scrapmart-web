@@ -5,7 +5,7 @@ import { getOrdersForBuyer, getSavedListings } from "@/lib/firestore";
 import { Order, Listing } from "@/types";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PackageSearch, Clock, ExternalLink, Bookmark, ShieldAlert, ArrowRight } from "lucide-react";
+import { PackageSearch, Clock, ExternalLink, Bookmark, ShieldAlert } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ListingCard, ListingCardSkeleton } from "@/components/shared/ListingCard";
 
@@ -108,7 +108,7 @@ export default function BuyerDashboard() {
                   <div className="text-center py-20">
                     <PackageSearch className="w-16 h-16 text-gray-200 mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-gray-900 mb-2">No active requests</h3>
-                    <p className="text-gray-500 font-medium mb-6">You haven't contacted any factories yet.</p>
+                    <p className="text-gray-500 font-medium mb-6">You haven&apos;t contacted any factories yet.</p>
                     <Link href="/search" className="text-accent-DEFAULT font-bold bg-accent-DEFAULT/10 px-6 py-3 rounded-full hover:bg-accent-DEFAULT/20 transition-colors">Start searching</Link>
                   </div>
                 ) : (
@@ -129,7 +129,7 @@ export default function BuyerDashboard() {
                             <div className="w-1 h-full bg-gray-200 rounded-full mr-4"></div>
                             <div className="flex-1">
                               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Your Message</p>
-                              <p className="text-sm font-medium text-gray-700 italic">"{order.message}"</p>
+                              <p className="text-sm font-medium text-gray-700 italic">&quot;{order.message}&quot;</p>
                             </div>
                           </div>
                         </div>

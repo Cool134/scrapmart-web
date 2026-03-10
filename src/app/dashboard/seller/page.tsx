@@ -32,7 +32,7 @@ export default function SellerDashboard() {
     }
   }, [user]);
 
-  const handleUpdateOrderStatus = async (orderId: string, status: Order['status'], listingId: string) => {
+  const handleUpdateOrderStatus = async (orderId: string, status: Order['status']) => {
     const loadingToast = toast.loading(`Marking as ${status}...`);
     try {
       await updateOrderStatus(orderId, status);
@@ -167,19 +167,19 @@ export default function SellerDashboard() {
 
                             <div className="bg-white border border-gray-100 p-4 rounded-xl shadow-inner mb-5 relative">
                               <div className="absolute -top-2 left-4 px-2 bg-white text-[10px] font-bold text-gray-400 uppercase">Buyer Message</div>
-                              <p className="text-sm text-gray-700 italic">"{o.message}"</p>
+                              <p className="text-sm text-gray-700 italic">&quot;{o.message}&quot;</p>
                             </div>
 
                             {o.status === 'pending' && (
                               <div className="flex space-x-3">
                                 <button 
-                                  onClick={() => handleUpdateOrderStatus(o.id!, 'accepted', o.listingId)}
+                                  onClick={() => handleUpdateOrderStatus(o.id!, 'accepted')}
                                   className="flex-1 bg-primary text-white font-bold py-3 rounded-xl hover:bg-primary/90 transition shadow-md flex justify-center items-center"
                                 >
                                   Accept & Arrange
                                 </button>
                                 <button 
-                                  onClick={() => handleUpdateOrderStatus(o.id!, 'rejected', o.listingId)}
+                                  onClick={() => handleUpdateOrderStatus(o.id!, 'rejected')}
                                   className="flex-1 bg-white border border-gray-200 text-red-600 font-bold py-3 rounded-xl hover:bg-red-50 transition"
                                 >
                                   Decline

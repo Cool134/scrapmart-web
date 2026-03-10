@@ -1,13 +1,13 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Sparkles, MapPin, Scale } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ListingCard, ListingCardSkeleton } from "@/components/shared/ListingCard";
 import { getListings } from "@/lib/firestore";
 import { Listing } from "@/types";
 import Link from "next/link";
-import { MaterialBadge } from "@/components/shared/MaterialBadge";
+
 
 const placeholders = [
   "Search steel offsets...",
@@ -167,7 +167,7 @@ export default function Home() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">No inventory available right now</h3>
             <p className="text-gray-500 font-medium max-w-md">
-              Factories haven't listed any new offsets today. Check back soon or adjust your search.
+              Factories haven&apos;t listed any new offsets today. Check back soon or adjust your search.
             </p>
           </motion.div>
         ) : (

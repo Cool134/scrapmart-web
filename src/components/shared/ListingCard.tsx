@@ -4,7 +4,6 @@ import { AIOutlineOverlay } from "./AIOutlineOverlay";
 import Link from "next/link";
 import { MapPin, Scale, Zap } from "lucide-react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 interface ListingCardProps {
   listing: Listing;
@@ -24,6 +23,7 @@ export function ListingCard({ listing, priority = false }: ListingCardProps) {
         {/* Top Image Section */}
         <div className="relative w-full h-56 bg-gray-100 overflow-hidden">
           {listing.imageURL ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img 
               src={listing.imageURL} 
               alt={listing.title}

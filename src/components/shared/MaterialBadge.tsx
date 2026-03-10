@@ -21,7 +21,7 @@ export function MaterialBadge({ material, size = "md" }: MaterialBadgeProps) {
     lg: "w-4 h-4"
   };
 
-  const variants: Record<string, { color: string, icon: any }> = {
+  const variants: Record<string, { color: string, icon: React.ElementType }> = {
     steel: { color: "bg-slate-100 text-slate-800 border-slate-200", icon: ShieldAlert },
     aluminum: { color: "bg-sky-100 text-sky-800 border-sky-200", icon: Sparkles },
     copper: { color: "bg-orange-100 text-orange-800 border-orange-200", icon: Flame },
