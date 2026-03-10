@@ -9,7 +9,21 @@ export async function POST(req: Request) {
     const base64Data = image.split(',')[1];
     
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
-    const prompt = `Analyze this metal scrap offset. Return ONLY a raw JSON object with NO markdown or code blocks. Keys: "materialType" (string), "thickness" (string), "dimensions" (string), "price" (number), "shape" (string).`;
+    const prompt = `You are analyzing a metal scrap piece image for a marketplace listing.
+    Estimate the following and return JSON only:
+    {
+     "material": "steel|aluminum|copper|iron|brass|unknown",
+     "thickness_mm": 0,
+     "width_cm": 0,
+     "height_cm": 0,
+     "surface_area_cm2": 0,
+     "estimated_weight_kg": 0,
+     "suggested_price_usd": 0,
+     "outline_points": [[0.1,0.1], [0.9,0.1], [0.9,0.9], [0.1,0.9]],
+     "surface_condition": "clean|rusty|painted|mixed",
+     "confidence": 0.95,
+     "description": "brief professional listing description"
+    }`;
     
     const result = await model.generateContent([
       prompt,
