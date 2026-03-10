@@ -5,8 +5,8 @@ export interface User {
   name: string;
   email: string;
   role: Role;
-  photoURL?: string;
-  createdAt: string;
+  photoURL?: string | null;
+  createdAt: any; // Firestore Timestamp
 }
 
 export interface AIAnalysisResult {
@@ -17,7 +17,7 @@ export interface AIAnalysisResult {
   surface_area_cm2: number;
   estimated_weight_kg: number;
   suggested_price_usd: number;
-  outline_points: number[][];
+  outline_points: number[][]; // Array of [x,y] coordinates
   surface_condition: string;
   confidence: number;
   description: string;
@@ -31,8 +31,8 @@ export interface Listing extends AIAnalysisResult {
   location: string;
   status: 'active' | 'sold' | 'draft';
   imageURL: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string; // ISO String
+  updatedAt: string; // ISO String
 }
 
 export interface Order {
@@ -42,7 +42,7 @@ export interface Order {
   listingId: string;
   status: 'pending' | 'accepted' | 'rejected' | 'completed';
   message: string;
-  createdAt: string;
+  createdAt: string; // ISO String
 }
 
 export interface SearchFilters {
