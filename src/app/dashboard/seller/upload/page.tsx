@@ -23,7 +23,7 @@ export default function UploadPage() {
 
   // Form State for Step 3
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<number | "">("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [isPublishing, setIsPublishing] = useState(false);
@@ -37,20 +37,41 @@ export default function UploadPage() {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = async () => {
-        const base64data = reader.result;
-        const res = await fetch("/api/analyze-image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: base64data, mimeType: file.type })
-        });
+        const base64data = reader.result as string;
         
-        if (!res.ok) throw new Error("AI analysis API returned an error");
-        
-        const data: AIAnalysisResult = await res.json();
-        setAiData(data);
-        setTitle(`Premium ${data.material.charAt(0).toUpperCase() + data.material.slice(1)} Offset`);
-        setPrice(data.suggested_price_usd);
-        setDescription(data.description);
+        // Create an AbortController for a timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 45000); // 45s timeout
+
+        try {
+          const res = await fetch("/api/analyze-image", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ image: base64data, mimeType: file.type }),
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(errData.details || "AI analysis API returned an error");
+          }
+          
+          const data: AIAnalysisResult = await res.json();
+          setAiData(data);
+          // Capitalize first letter of material safely
+          const safeMaterial = data.material ? data.material.charAt(0).toUpperCase() + data.material.slice(1) : 'Unknown';
+          setTitle(`Premium ${safeMaterial} Offset`);
+          setPrice(data.suggested_price_usd > 0 ? data.suggested_price_usd : "");
+          setDescription(data.description);
+        } catch (fetchError: unknown) {
+          clearTimeout(timeoutId);
+          if ((fetchError as Error).name === 'AbortError') {
+             throw new Error("AI Analysis timed out. The image might be too complex or the server is busy.");
+          }
+          throw fetchError;
+        }
       };
     } catch (e: unknown) {
       toast.error((e as Error).message || "Failed to analyze image. Please try again.");
@@ -62,7 +83,7 @@ export default function UploadPage() {
 
   const handlePublish = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !file || !aiData || !title || !price || !location) {
+    if (!user || !file || !aiData || !title || price === "" || !location) {
       return toast.error("Please fill all required fields");
     }
 
@@ -74,18 +95,17 @@ export default function UploadPage() {
         setUploadProgress(progress);
       });
       
-      toast.loading("Writing listing to blockchain...", { id: toastId });
+      toast.loading("Writing listing to database...", { id: toastId });
       
       await createListing({
         sellerId: user.uid,
         title, 
-        price, 
+        price: Number(price), 
         location,
         status: "active",
         imageURL,
         ...aiData,
-        // Override with user edits
-        description 
+        description // User edits override AI
       });
 
       toast.success("Listing published successfully!", { id: toastId });
@@ -264,7 +284,7 @@ export default function UploadPage() {
                       <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Selling Price (USD)</label>
                       <div className="relative">
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-black text-gray-400">$</span>
-                        <input required type="number" min="1" value={price} onChange={e=>setPrice(Number(e.target.value))} className="w-full p-4 pl-10 bg-white border-2 border-accent-DEFAULT/20 text-accent-DEFAULT rounded-2xl focus:ring-4 focus:ring-accent-DEFAULT/20 outline-none font-black text-3xl transition-all" />
+                        <input required type="number" min="0" step="0.01" value={price} onChange={e=>setPrice(e.target.value === "" ? "" : Number(e.target.value))} className="w-full p-4 pl-10 bg-white border-2 border-accent-DEFAULT/20 text-accent-DEFAULT rounded-2xl focus:ring-4 focus:ring-accent-DEFAULT/20 outline-none font-black text-3xl transition-all" />
                       </div>
                       <p className="text-xs text-gray-500 mt-3 font-medium flex items-center">
                         <Sparkles className="w-3 h-3 mr-1 text-accent-DEFAULT" /> AI Suggested: ${aiData.suggested_price_usd}
