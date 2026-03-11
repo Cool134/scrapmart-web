@@ -143,7 +143,7 @@ export default function BuyerDashboard() {
                             {order.status}
                           </span>
                           <Link 
-                            href={`/listing/${order.listingId}`}
+                            href={`/listing/detail?id=${order.listingId}`}
                             className="flex items-center text-sm font-bold text-accent-DEFAULT hover:text-primary transition-colors"
                           >
                             View Original Listing

@@ -18,7 +18,7 @@ export function ListingCard({ listing, priority = false }: ListingCardProps) {
       whileHover={{ y: -6, transition: { duration: 0.2 } }}
       className="group bg-white rounded-2xl overflow-hidden border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgba(79,70,229,0.08)] transition-all duration-300 flex flex-col h-full relative"
     >
-      <Link href={`/listing/${listing.id}`} className="flex flex-col h-full outline-none focus-visible:ring-2 focus-visible:ring-accent-DEFAULT focus-visible:ring-offset-2 rounded-2xl">
+      <Link href={`/listing/detail?id=${listing.id}`} className="flex flex-col h-full outline-none focus-visible:ring-2 focus-visible:ring-accent-DEFAULT focus-visible:ring-offset-2 rounded-2xl">
         
         {/* Top Image Section */}
         <div className="relative w-full h-56 bg-gray-100 overflow-hidden">
