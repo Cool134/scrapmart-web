@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { getListing, createOrder } from "@/lib/firestore";
 import { useAuthState } from "@/lib/auth";
 import { Listing } from "@/types";
@@ -9,12 +9,12 @@ import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { MapPin, Scale, Ruler, Layers, BadgeCheck, X, FileText, Calendar, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
-function ListingDetailContent() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+export default function ListingDetail({ params }: { params: { id: string } }) {
+  const { id } = params;
   const { user, role, loading: authLoading } = useAuthState();
   const [listing, setListing] = useState<Listing | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,16 +25,12 @@ function ListingDetailContent() {
   const router = useRouter();
 
   useEffect(() => {
-    if (id) {
-      getListing(id).then(l => {
-        setListing(l);
-        setLoading(false);
-      }).catch(() => {
-        setLoading(false);
-      });
-    } else {
+    getListing(id).then(l => {
+      setListing(l);
       setLoading(false);
-    }
+    }).catch(() => {
+      setLoading(false);
+    });
   }, [id]);
 
   const handleOrder = async (e: React.FormEvent) => {
@@ -99,7 +95,12 @@ function ListingDetailContent() {
               transition={{ duration: 0.4 }}
               className="relative rounded-[2rem] overflow-hidden border border-gray-200/60 shadow-[0_8px_40px_rgba(0,0,0,0.06)] bg-gray-50 group aspect-square md:aspect-[4/3] flex items-center justify-center"
             >
-              <img src={listing.imageURL} alt={listing.title} className="w-full h-full object-contain p-4" />
+              <Image 
+                src={listing.imageURL} 
+                alt={listing.title} 
+                fill
+                className="object-contain p-4" 
+              />
               {listing.outline_points && <AIOutlineOverlay points={listing.outline_points} />}
               <div className="absolute top-6 left-6 bg-black/70 backdrop-blur-xl px-4 py-2 rounded-full flex items-center text-white text-sm font-bold shadow-lg border border-white/10">
                 <BadgeCheck className="w-4 h-4 text-emerald-400 mr-2" />
@@ -150,7 +151,7 @@ function ListingDetailContent() {
               {authLoading ? (
                 <div className="w-full py-5 bg-gray-50 rounded-2xl animate-pulse"></div>
               ) : !user ? (
-                <div className="p-6 bg-gray-50 border border-gray-200 rounded-2xl text-center"><p className="text-gray-600 font-medium mb-4">You must be logged in to request this material.</p><Link href={`/auth?callbackUrl=/listing/detail?id=${id}`} className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-md hover:bg-primary/90 transition-all inline-block">Sign in to Purchase</Link></div>
+                <div className="p-6 bg-gray-50 border border-gray-200 rounded-2xl text-center"><p className="text-gray-600 font-medium mb-4">You must be logged in to request this material.</p><Link href={`/auth?callbackUrl=/listing/${id}`} className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-md hover:bg-primary/90 transition-all inline-block">Sign in to Purchase</Link></div>
               ) : user.uid === listing.sellerId ? (
                 <div className="p-6 bg-blue-50 border border-blue-200 rounded-2xl text-center"><p className="text-blue-800 font-bold text-lg mb-1">This is your listing.</p><p className="text-blue-600 font-medium text-sm">You can manage this item from your Seller Dashboard.</p></div>
               ) : role === 'buyer' ? (
@@ -175,7 +176,9 @@ function ListingDetailContent() {
               <h2 className="text-3xl font-black text-primary mb-2">Send Request</h2>
               <p className="text-gray-500 font-medium mb-6">Connect with the factory to arrange pickup and payment for <strong className="text-accent-DEFAULT">${listing.price}</strong>.</p>
               <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-6 flex items-center space-x-4">
-                <img src={listing.imageURL} alt="thumbnail" className="w-12 h-12 rounded-lg object-cover bg-white" />
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden">
+                  <Image src={listing.imageURL} alt="thumbnail" fill className="object-cover bg-white" />
+                </div>
                 <div><p className="font-bold text-gray-900 text-sm truncate max-w-[250px]">{listing.title}</p><p className="text-xs text-gray-500 font-medium">{listing.location}</p></div>
               </div>
               <form onSubmit={handleOrder}>
@@ -193,13 +196,5 @@ function ListingDetailContent() {
         )}
       </AnimatePresence>
     </div>
-  );
-}
-
-export default function ListingDetail() {
-  return (
-    <Suspense fallback={<div className="flex-1 flex items-center justify-center p-10"><LoadingSpinner size="lg" label="Loading..." /></div>}>
-      <ListingDetailContent />
-    </Suspense>
   );
 }
