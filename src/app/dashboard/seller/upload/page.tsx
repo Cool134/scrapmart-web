@@ -37,7 +37,10 @@ export default function SellerUploadPage() {
         sellerId: 'mock-seller-id',
         estimated_weight_kg: 10,
         surface_area_cm2: 10000,
-        confidence: 0.95
+        confidence: 0.95,
+        suggested_price_usd: Number(formData.price),
+        outline_points: [],
+        surface_condition: 'Good'
       });
       alert('Listing created successfully!');
       router.push('/search');

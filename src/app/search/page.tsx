@@ -51,6 +51,10 @@ function SearchContent() {
           sellerId: m.seller_name,
           estimated_weight_kg: 50,
           surface_area_cm2: 10000,
+          suggested_price_usd: m.price_per_kg,
+          outline_points: [],
+          surface_condition: 'Good',
+          confidence: 1.0,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         }));
@@ -119,7 +123,7 @@ function SearchContent() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">No offsets found</h3>
             <p className="text-gray-500 font-medium max-w-sm">
-              We couldn't find any materials matching your exact criteria. Try broadening your filters.
+              We could not find any materials matching your exact criteria. Try broadening your filters.
             </p>
             <button 
               onClick={() => { setFilters({}); setQuery(""); router.push('/search'); }} 
