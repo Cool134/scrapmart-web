@@ -30,7 +30,7 @@ export default function SellerUploadPage() {
         price: Number(formData.price),
         location: formData.location,
         description: formData.description,
-        imageURL: formData.imageURL || '/scrap/scrap-1.jpg',
+        imageURL: formData.imageURL || '/scrap/scrap-1.svg',
         width_cm: Number(formData.width_cm || 100),
         height_cm: Number(formData.height_cm || 100),
         status: 'active',
@@ -80,7 +80,7 @@ export default function SellerUploadPage() {
 
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-2">Image URL</label>
-          <input name="imageURL" value={formData.imageURL} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="/scrap/scrap-1.jpg (Optional)" />
+          <input name="imageURL" value={formData.imageURL} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="/scrap/scrap-1.svg (Optional)" />
         </div>
 
         <div>

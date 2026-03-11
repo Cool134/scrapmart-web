@@ -18,7 +18,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 2.50,
     location: 'Mumbai, MH',
     description: 'High quality SS 304 offcuts from laser cutting operation. Minimal rust, straight edges.',
-    image: '/scrap/scrap-1.jpg',
+    image: '/scrap/scrap-1.svg',
     sheet_dimensions: '1200mm x 800mm (irregular)',
     seller_name: 'MetalWorks India'
   },
@@ -29,7 +29,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 3.20,
     location: 'Pune, MH',
     description: 'Aircraft grade aluminum scrap. Perfect for CNC machining projects.',
-    image: '/scrap/scrap-2.jpg',
+    image: '/scrap/scrap-2.svg',
     sheet_dimensions: '500mm x 500mm',
     seller_name: 'AeroScrap Ltd'
   },
@@ -40,7 +40,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 0.80,
     location: 'Delhi, DL',
     description: 'Cold rolled mild steel sheets. Surface rust present but structurally sound.',
-    image: '/scrap/scrap-3.jpg',
+    image: '/scrap/scrap-3.svg',
     sheet_dimensions: '2000mm x 1000mm',
     seller_name: 'Delhi Steel Traders'
   },
@@ -51,7 +51,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 8.50,
     location: 'Bangalore, KA',
     description: 'Clean copper roofing offcuts. No solder or attachments.',
-    image: '/scrap/scrap-4.jpg',
+    image: '/scrap/scrap-4.svg',
     sheet_dimensions: '300mm x 2000mm (strips)',
     seller_name: 'Southern Metals'
   },
@@ -62,7 +62,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 5.40,
     location: 'Chennai, TN',
     description: 'Yellow brass plates from dismantled machinery. Heavy and clean.',
-    image: '/scrap/scrap-5.jpg',
+    image: '/scrap/scrap-5.svg',
     sheet_dimensions: '400mm x 600mm',
     seller_name: 'Industrial Salvage Co.'
   },
@@ -73,7 +73,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 25.00,
     location: 'Hyderabad, TG',
     description: 'Aerospace surplus titanium plate. Rare find.',
-    image: '/scrap/scrap-6.jpg',
+    image: '/scrap/scrap-6.svg',
     sheet_dimensions: '250mm x 250mm',
     seller_name: 'Hi-Tech Alloys'
   },
@@ -84,7 +84,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 1.10,
     location: 'Ahmedabad, GJ',
     description: 'Leftover GI sheets from ducting project.',
-    image: '/scrap/scrap-1.jpg',
+    image: '/scrap/scrap-1.svg',
     sheet_dimensions: '1000mm x 1500mm',
     seller_name: 'Gujarat Ducting'
   },
@@ -95,7 +95,7 @@ export const mockListings: MockListing[] = [
     price_per_kg: 3.80,
     location: 'Kolkata, WB',
     description: 'Marine grade stainless steel plates. Very heavy duty.',
-    image: '/scrap/scrap-2.jpg',
+    image: '/scrap/scrap-2.svg',
     sheet_dimensions: '800mm x 800mm',
     seller_name: 'Marine Salvage WB'
   }

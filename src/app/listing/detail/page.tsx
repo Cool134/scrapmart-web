@@ -57,7 +57,7 @@ function ListingDetailContent() {
           price: `$${listing.price}`,
           location: listing.location,
           description: listing.description || '',
-          image: listing.imageURL || '/scrap/scrap-1.jpg',
+          image: listing.imageURL || '/scrap/scrap-1.svg',
           dimensions: `${listing.width_cm}cm x ${listing.height_cm}cm`,
           sellerName: listing.sellerId || 'Unknown Seller',
           thickness: `${listing.thickness_mm}mm`,
