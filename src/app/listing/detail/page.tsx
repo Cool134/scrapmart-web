@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import { mockListings, MockListing } from '@/data/mockListings';
+import { mockListings } from '@/data/mockListings';
 import { getListing } from '@/lib/firestore';
 import ScrapViewer from '@/components/ScrapViewer';
 
