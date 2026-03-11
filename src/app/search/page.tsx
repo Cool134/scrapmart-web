@@ -8,6 +8,7 @@ import { Listing, SearchFilters } from "@/types";
 import { SlidersHorizontal, PackageSearch } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
+import { mockListings } from "@/data/mockListings";
 
 function SearchContent() {
   const params = useSearchParams();
@@ -24,7 +25,6 @@ function SearchContent() {
   const [loading, setLoading] = useState(true);
   const [showFiltersMobile, setShowFiltersMobile] = useState(false);
 
-  // Sync query state if URL parameter changes (e.g. from Navbar search)
   useEffect(() => {
     setQuery(params.get("q") || "");
   }, [params]);
@@ -33,10 +33,30 @@ function SearchContent() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Fetch from Firestore using active object filters (Material, Price, Thickness)
         let res = await getListings(filters);
         
-        // Client-side filtering for text query (title/description)
+        // Map mockListings to Listing type
+        const mappedMocks: Listing[] = mockListings.map(m => ({
+          id: m.id,
+          title: `${m.material} Scrap`,
+          material: m.material,
+          price: m.price_per_kg,
+          thickness_mm: parseFloat(m.thickness),
+          location: m.location,
+          description: m.description,
+          imageURL: m.image,
+          width_cm: 100,
+          height_cm: 100,
+          status: 'active',
+          sellerId: m.seller_name,
+          estimated_weight_kg: 50,
+          surface_area_cm2: 10000,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }));
+
+        res = [...mappedMocks, ...res];
+
         if (query) {
           const q = query.toLowerCase().trim();
           res = res.filter(l => 
@@ -45,7 +65,6 @@ function SearchContent() {
           );
         }
         
-        // Sort by newest
         res.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         setListings(res);
       } catch (error) {
@@ -60,14 +79,12 @@ function SearchContent() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1 flex flex-col md:flex-row gap-8">
       
-      {/* Sidebar Filters - Sticky on Desktop, Drawer on Mobile */}
       <div className={`md:w-80 flex-shrink-0 ${showFiltersMobile ? 'block' : 'hidden md:block'}`}>
         <div className="sticky top-24">
           <SearchFiltersComponent filters={filters} setFilters={setFilters} />
         </div>
       </div>
 
-      {/* Main Results Area */}
       <div className="flex-1">
         <div className="flex items-end justify-between mb-8 border-b border-gray-100 pb-6">
           <div>
@@ -102,7 +119,7 @@ function SearchContent() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">No offsets found</h3>
             <p className="text-gray-500 font-medium max-w-sm">
-              We couldn&apos;t find any materials matching your exact criteria. Try broadening your filters.
+              We couldn't find any materials matching your exact criteria. Try broadening your filters.
             </p>
             <button 
               onClick={() => { setFilters({}); setQuery(""); router.push('/search'); }} 
