@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AIAnalysisResult } from "@/types";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "dummy");
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || "dummy");
 
 export const analyzeScrapImage = async (base64Image: string, mimeType: string): Promise<AIAnalysisResult> => {
   if (!base64Image) {

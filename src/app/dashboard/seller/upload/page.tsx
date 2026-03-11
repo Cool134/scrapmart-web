@@ -6,6 +6,7 @@ import { AIOutlineOverlay } from "@/components/shared/AIOutlineOverlay";
 import { useAuthState } from "@/lib/auth";
 import { uploadScrapImage } from "@/lib/storage";
 import { createListing } from "@/lib/firestore";
+import { analyzeScrapImage } from "@/lib/gemini";
 import { AIAnalysisResult } from "@/types";
 import { useRouter } from "next/navigation";
 import { Sparkles, CheckCircle2, ArrowRight, Save, Image as ImageIcon } from "lucide-react";
@@ -44,21 +45,9 @@ export default function UploadPage() {
         const timeoutId = setTimeout(() => controller.abort(), 45000); // 45s timeout
 
         try {
-          const res = await fetch("/api/analyze-image", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ image: base64data, mimeType: file.type }),
-            signal: controller.signal
-          });
-          
+          const base64Content = base64data.split(',')[1];
+          const data = await analyzeScrapImage(base64Content, file.type);
           clearTimeout(timeoutId);
-
-          if (!res.ok) {
-            const errData = await res.json().catch(() => ({}));
-            throw new Error(errData.details || "AI analysis API returned an error");
-          }
-          
-          const data: AIAnalysisResult = await res.json();
           setAiData(data);
           // Capitalize first letter of material safely
           const safeMaterial = data.material ? data.material.charAt(0).toUpperCase() + data.material.slice(1) : 'Unknown';

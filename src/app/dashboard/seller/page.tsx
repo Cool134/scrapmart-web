@@ -159,7 +159,7 @@ export default function SellerDashboard() {
                                   <p className="text-sm font-bold text-gray-900 truncate">{relatedListing.title}</p>
                                   <p className="text-xs text-accent-DEFAULT font-black">${relatedListing.price}</p>
                                 </div>
-                                <Link href={`/listing/${relatedListing.id}`} className="p-2 hover:bg-gray-50 rounded-lg transition">
+                                <Link href={`/listing/detail?id=${relatedListing.id}`} className="p-2 hover:bg-gray-50 rounded-lg transition">
                                   <ExternalLink className="w-4 h-4 text-gray-400" />
                                 </Link>
                               </div>
@@ -219,7 +219,7 @@ export default function SellerDashboard() {
                     {listings.map(l => (
                       <Link 
                         key={l.id} 
-                        href={`/listing/${l.id}`}
+                        href={`/listing/detail?id=${l.id}`}
                         className="flex items-center space-x-4 p-3 bg-white border border-gray-100 hover:border-accent-DEFAULT/30 hover:shadow-md rounded-2xl transition-all group"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
