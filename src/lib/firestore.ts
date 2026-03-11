@@ -191,3 +191,5 @@ export const getSavedListings = async (userId: string): Promise<Listing[]> => {
     return [];
   }
 };
+
+export const getListingById = getListing;
