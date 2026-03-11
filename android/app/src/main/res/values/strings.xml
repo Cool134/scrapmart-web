@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ScrapMart</string>
+    <string name="title_activity_main">ScrapMart</string>
+    <string name="package_name">com.scrapmart.app</string>
+    <string name="custom_url_scheme">com.scrapmart.app</string>
+</resources>
