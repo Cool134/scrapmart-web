@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { mockListings, MockListing } from '@/data/mockListings';
 import { getListing } from '@/lib/firestore';
-import { Listing } from '@/types';
+import ScrapViewer from '@/components/ScrapViewer';
 
 type DetailData = {
   id: string;
@@ -76,7 +76,7 @@ function ListingDetailContent() {
   if (!data) return <div className="p-8 text-center">Listing not found.</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8">
+    <div className="max-w-4xl mx-auto p-4 md:p-8 space-y-8">
       <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
         <div className="md:flex">
           <div className="md:w-1/2">
@@ -111,7 +111,8 @@ function ListingDetailContent() {
           </div>
         </div>
       </div>
-      <div id="scrap-viewer-container" className="mt-8"></div>
+      
+      <ScrapViewer material={data.material} />
     </div>
   );
 }
