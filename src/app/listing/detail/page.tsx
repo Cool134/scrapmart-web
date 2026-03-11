@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { getListing, createOrder } from "@/lib/firestore";
 import { useAuthState } from "@/lib/auth";
 import { Listing } from "@/types";
@@ -9,12 +9,13 @@ import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 import { MapPin, Scale, Ruler, Layers, BadgeCheck, X, FileText, Calendar, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function ListingDetail({ params }: { params: { id: string } }) {
-  const { id } = params;
+function ListingDetailContent() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
   const { user, role, loading: authLoading } = useAuthState();
   const [listing, setListing] = useState<Listing | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,12 +26,16 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
   const router = useRouter();
 
   useEffect(() => {
-    getListing(id).then(l => {
-      setListing(l);
+    if (id) {
+      getListing(id).then(l => {
+        setListing(l);
+        setLoading(false);
+      }).catch(() => {
+        setLoading(false);
+      });
+    } else {
       setLoading(false);
-    }).catch(() => {
-      setLoading(false);
-    });
+    }
   }, [id]);
 
   const handleOrder = async (e: React.FormEvent) => {
@@ -151,7 +156,7 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
               {authLoading ? (
                 <div className="w-full py-5 bg-gray-50 rounded-2xl animate-pulse"></div>
               ) : !user ? (
-                <div className="p-6 bg-gray-50 border border-gray-200 rounded-2xl text-center"><p className="text-gray-600 font-medium mb-4">You must be logged in to request this material.</p><Link href={`/auth?callbackUrl=/listing/${id}`} className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-md hover:bg-primary/90 transition-all inline-block">Sign in to Purchase</Link></div>
+                <div className="p-6 bg-gray-50 border border-gray-200 rounded-2xl text-center"><p className="text-gray-600 font-medium mb-4">You must be logged in to request this material.</p><Link href={`/auth?callbackUrl=/listing/detail?id=${id}`} className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-md hover:bg-primary/90 transition-all inline-block">Sign in to Purchase</Link></div>
               ) : user.uid === listing.sellerId ? (
                 <div className="p-6 bg-blue-50 border border-blue-200 rounded-2xl text-center"><p className="text-blue-800 font-bold text-lg mb-1">This is your listing.</p><p className="text-blue-600 font-medium text-sm">You can manage this item from your Seller Dashboard.</p></div>
               ) : role === 'buyer' ? (
@@ -196,5 +201,13 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function ListingDetail() {
+  return (
+    <Suspense fallback={<div className="flex-1 flex items-center justify-center p-10"><LoadingSpinner size="lg" label="Loading..." /></div>}>
+      <ListingDetailContent />
+    </Suspense>
   );
 }
