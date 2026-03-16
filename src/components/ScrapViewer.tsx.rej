@@ -1,5 +1,5 @@
---- ScrapViewer.tsx
-+++ ScrapViewer.tsx
+--- src/components/ScrapViewer.tsx
++++ src/components/ScrapViewer.tsx
 @@ -8,22 +8,23 @@
  export default function ScrapViewer({ material = "Metal" }: ScrapViewerProps) {
    const mountRef = useRef<HTMLDivElement>(null);
