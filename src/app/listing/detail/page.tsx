@@ -36,7 +36,7 @@ function ListingDetailContent() {
       setData({
         id: mock.id,
         material: mock.material,
-        price: `$${mock.price_per_kg.toFixed(2)} / kg`,
+        price: `₹${mock.price_per_kg.toFixed(2)} / kg`,
         location: mock.location,
         description: mock.description,
         image: mock.image,
@@ -54,7 +54,7 @@ function ListingDetailContent() {
         setData({
           id: listing.id!,
           material: listing.material,
-          price: `$${listing.price}`,
+          price: `₹${listing.price}`,
           location: listing.location,
           description: listing.description || '',
           image: listing.imageURL || '/scrap/scrap-1.svg',

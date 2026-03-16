@@ -51,7 +51,7 @@ function SearchContent() {
           sellerId: m.seller_name,
           estimated_weight_kg: 50,
           surface_area_cm2: 10000,
-          suggested_price_usd: m.price_per_kg,
+          suggested_price_inr: m.price_per_kg,
           outline_points: [],
           surface_condition: 'Good',
           confidence: 1.0,

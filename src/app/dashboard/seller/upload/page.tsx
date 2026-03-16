@@ -88,7 +88,7 @@ export default function SellerUploadPage() {
         estimated_weight_kg: 10,
         surface_area_cm2: 10000,
         confidence: analysisResult?.confidence || 0.95,
-        suggested_price_usd: Number(formData.price || 0),
+        suggested_price_inr: Number(formData.price || 0),
         outline_points: [],
         surface_condition: 'Good'
       });
@@ -246,7 +246,7 @@ export default function SellerUploadPage() {
                   className="peer w-full bg-gray-50 text-gray-900 border-none rounded-2xl px-4 pt-6 pb-2 focus:ring-2 focus:ring-blue-500 focus:bg-blue-50/50 outline-none transition-all" 
                 />
                 <label className="absolute left-4 top-4 text-sm font-medium text-gray-500 peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:text-xs peer-focus:text-blue-600 transition-all cursor-text pointer-events-none">
-                  Price per Kg ($)
+                  Price per Kg (₹)
                 </label>
               </div>
             </div>

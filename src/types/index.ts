@@ -16,7 +16,7 @@ export interface AIAnalysisResult {
   height_cm: number;
   surface_area_cm2: number;
   estimated_weight_kg: number;
-  suggested_price_usd: number;
+  suggested_price_inr: number;
   outline_points: number[][]; // Array of [x,y] coordinates
   surface_condition: string;
   confidence: number;

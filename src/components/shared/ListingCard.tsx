@@ -57,7 +57,7 @@ export function ListingCard({ listing, priority = false }: ListingCardProps) {
           <div className="flex justify-between items-start mb-3 gap-2">
             <MaterialBadge material={listing.material} />
             <span className="font-black text-xl text-primary tracking-tight">
-              ${listing.price.toLocaleString()}
+              ₹${listing.price.toLocaleString()}
             </span>
           </div>
           

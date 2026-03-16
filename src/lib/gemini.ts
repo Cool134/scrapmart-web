@@ -22,7 +22,7 @@ export const analyzeScrapImage = async (base64Image: string, mimeType: string): 
    "height_cm": <number>,
    "surface_area_cm2": <number>,
    "estimated_weight_kg": <number> (calculated using standard density of the detected material),
-   "suggested_price_usd": <number> (calculated using current average scrap/offset market rates),
+   "suggested_price_inr": <number> (calculated using current average scrap/offset market rates),
    "outline_points": [[x,y], [x,y], ...] (Array of coordinate pairs. These must be normalized 0-1 coordinates mapping the exact contour/polygon of the scrap piece in the image. Provide a minimum of 8 points.),
    "surface_condition": "clean" | "rusty" | "painted" | "mixed",
    "confidence": <number> (between 0.0 and 1.0 representing your confidence in this assessment),
@@ -76,7 +76,7 @@ export const analyzeScrapImage = async (base64Image: string, mimeType: string): 
       height_cm: 0,
       surface_area_cm2: 0,
       estimated_weight_kg: 0,
-      suggested_price_usd: 0,
+      suggested_price_inr: 0,
       outline_points: [[0.1, 0.1], [0.9, 0.1], [0.9, 0.9], [0.1, 0.9]], // Default bounding box
       surface_condition: "mixed",
       confidence: 0,

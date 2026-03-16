@@ -75,7 +75,7 @@ export default function SellerDashboard() {
             { label: "Total Listings", val: listings.length, icon: Package, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-100" },
             { label: "Active Offsets", val: activeCount, icon: CheckCircle, color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
             { label: "Pending Requests", val: pendingOrders.length, icon: Clock, color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-100" },
-            { label: "Est. Revenue (Sold)", val: `$${revenue.toLocaleString()}`, icon: TrendingUp, color: "text-accent-DEFAULT", bg: "bg-accent-DEFAULT/10", border: "border-accent-DEFAULT/20" }
+            { label: "Est. Revenue (Sold)", val: `₹${revenue.toLocaleString()}`, icon: TrendingUp, color: "text-accent-DEFAULT", bg: "bg-accent-DEFAULT/10", border: "border-accent-DEFAULT/20" }
           ].map((stat, i) => (
             <motion.div 
               key={i} 

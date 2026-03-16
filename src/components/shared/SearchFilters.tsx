@@ -83,7 +83,7 @@ export function SearchFilters({ filters, setFilters }: SearchFiltersProps) {
       <div className="space-y-3">
         <label className="text-sm font-bold text-gray-700 uppercase tracking-wide flex items-center">
           <DollarSign className="w-4 h-4 mr-2 text-gray-400" />
-          Max Price (USD)
+          Max Price (INR)
         </label>
         <div className="pt-2">
           <input 
@@ -93,9 +93,9 @@ export function SearchFilters({ filters, setFilters }: SearchFiltersProps) {
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent-DEFAULT"
           />
           <div className="flex justify-between items-center mt-2">
-            <span className="text-xs font-bold text-gray-400">$0</span>
+            <span className="text-xs font-bold text-gray-400">₹0</span>
             <span className="text-sm font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
-              {filters.maxPrice && filters.maxPrice < 5000 ? `<= $${filters.maxPrice}` : 'Any Price'}
+              {filters.maxPrice && filters.maxPrice < 5000 ? `<= ₹${filters.maxPrice}` : 'Any Price'}
             </span>
           </div>
         </div>
