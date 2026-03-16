@@ -1,5 +1,0 @@
-steel
-brass
-iron
-aluminum
-copper
